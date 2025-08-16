@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Exercise Logger</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="antu">
+    <h1 id="Header">Exercise Logger</h1>
+    <form id="Form" onsubmit="return logExercise()">
+        <fieldset>
+            Exercise Name:
+            <select id="exercise" name="exercise" required>
+                <option value="" disabled selected>Select an exercise</option>
+                <option>Push-ups</option>
+                <option>Squats</option>
+                <option>Plank</option>
+                <option>Burpees</option>
+                <option>Jumping Jacks</option>
+                <option>Crunches</option>
+                <option>Lunges</option>
+                <option>Mountain Climbers</option>
+                <option>Other</option>
+            </select>
+            <div id="exerciseError"></div>
+            <br><br>
+
+            Sets: <input type="number" id="sets" required>
+            <div id="setsError"></div>
+            Reps: <input type="number" id="reps" required>
+            <div id="repsError"></div>
+            Weight (kg): <input type="number" id="weight">
+            <div id="weightError"></div>
+
+            <input type="submit" value="Log Exercise">
+        </fieldset>
+    </form>
+    <div style="text-align:center; margin-top:50px;">
+        <a id="next" href="sessionSum.html"> <button type="button">Session Summary</button> </a><br><br> 
+        <a id="back" href="workoutTimer.html"> <button type="button"> Workout Timer </button> </a>
+    </div>
+    <h3>Logged Exercises</h3>
+    <ul id="exerciseList"></ul>
+
+    <script src="exerciseLogger.js"></script>
+</body>
+</html>

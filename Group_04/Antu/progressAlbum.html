@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>Progress Photo Album</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="antu">
+    <h1 id="Header">Progress Photo Album</h1>
+    <form id="Form" onsubmit="return addPhoto()" enctype="multipart/form-data">
+        <fieldset>
+            Select Photo: <input type="file" id="photo" accept="image/*" required>
+            <div id="photoError"></div>
+            <input type="submit" value="Add Photo">
+        </fieldset>
+    </form>
+    <div style="text-align:center; margin-top:50px;">
+        <a id="next" href="measurement.html"> <button type="button">Measurement</button> </a><br><br> 
+        <a id="back" href="Dashboard.html"> <button type="button">Dashboard</button> </a>
+    </div>
+    <h3>Photo Timeline</h3>
+    <div id="photoGallery"></div>
+
+    <script src="progressAlbum.js"></script>
+</body>
+</html>

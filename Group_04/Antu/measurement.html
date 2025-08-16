@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Measurement Input</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="antu">
+    <h1 id="Header">Measurement Input</h1>
+    <form id="Form" onsubmit="return saveMeasurement()">
+        <fieldset>
+            Weight (kg): <input type="number" id="weight" required>
+            <div id="weightError"></div>
+            Waist (cm): <input type="number" id="waist">
+            <div id="waistError"></div>
+            Chest (cm): <input type="number" id="chest">
+            <div id="chestError"></div>
+            <input type="submit" value="Save Measurement">
+        </fieldset>
+    </form>
+    <div style="text-align:center; margin-top:50px;">
+        <a id="next" href="progressAlbum.html"> <button type="button">Album</button> </a><br><br> 
+        <a id="back" href="sessionSum.html"> <button type="button"> Session Summary </button> </a>
+    </div>
+    <h3>Measurement History</h3>
+    <ul id="measurementList"></ul>
+
+    <script src="measurement.js"></script>
+</body>
+</html>

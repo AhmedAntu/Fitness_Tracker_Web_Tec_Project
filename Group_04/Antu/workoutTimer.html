@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Workout Timer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="antu">
+    <h1 id="Header">Workout Timer</h1>
+    <div style="text-align:center; margin-top:40px;">
+        <div id="timeDisplay" style="font-size: 48px; font-weight: bold;">00:00</div>
+        <div id="timerMsg" style="margin-top:10px; font-weight:bold;"></div>
+        <button style="color: rgb(12, 99, 12);" onclick="startTimer()">Start</button>
+        <button style="color: red;" onclick="stopTimer()">Stop</button>
+        <button style="color: rgb(2, 2, 146);" onclick="resetTimer()">Reset</button>
+    </div>
+    <div style="text-align:center; margin-top:50px;">
+        <a id="next" href="exerciseLogger.html"> <button type="button">Exercise Logger</button> </a><br><br> 
+        <a id="back" href="dashboard.html"> <button type="button"> Dashboard </button> </a>
+    </div>
+
+    <script src="workoutTimer.js"></script>
+</body>
+</html>

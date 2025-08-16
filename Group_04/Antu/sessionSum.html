@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>Session Summary</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="antu">
+    <h1 id="Header">Session Summary</h1>
+    <form id="Form" onsubmit="return saveSummary()">
+        <fieldset>
+            Notes: <textarea id="notes"></textarea>
+            <div id="notesError"></div>
+            <input type="submit" value="Save Summary">
+        </fieldset>
+    </form>
+    <div style="text-align:center; margin-top:50px;">
+        <a id="next" href="measurement.html"> <button type="button">Measurement</button> </a><br><br> 
+        <a id="back" href="exerciseLogger.html"> <button type="button"> Exercise Logger</button> </a>
+    </div>
+    <h3>Previous Sessions</h3>
+    <div id="sessionHistory"></div>
+
+    <script src="sessionSum.js"></script>
+</body>
+</html>

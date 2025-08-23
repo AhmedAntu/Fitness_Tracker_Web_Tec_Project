@@ -97,6 +97,7 @@ Interaction:
 
 
 📁 Project Status
+
 For now -->
 
 ✔️ Tanvir – User Entry & Profile Landing Page (from Common Features) – Intro to the system, CTA for signup/login. Signup Screen – User registration with email verification. Login Screen – Secure login for existing users. Forgot Password Screen – Email-based reset process. Profile Management (Edit Profile) – Update name, email, avatar, and password. Purpose: Handles all entry points and basic identity setup.

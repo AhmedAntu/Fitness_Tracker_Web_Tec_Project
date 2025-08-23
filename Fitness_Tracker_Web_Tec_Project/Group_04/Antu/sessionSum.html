@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Session Summary</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body id="antu">
+    <h1 id="Header">Session Summary</h1>
+    <form id="Form" onsubmit="return saveSession()">
+        <fieldset>
+            Notes:
+            <textarea id="notes" placeholder="Enter session notes here..." oninput="validateNotes()" rows="4" cols="50"></textarea>
+            <div id="notesError"></div>
+            <input type="submit" value="Save Session Notes">
+        </fieldset>
+    </form>
+
+    <h3>Previous Sessions</h3>
+    <input type="text" id="sessionSearch" placeholder="Search sessions" oninput="filterSessions()">
+    <ul id="sessionList"></ul>
+
+    <div style="text-align:center; margin-top: 40px;">
+        <a id="back" href="dashBoard.html"><button type="button">Back</button></a>
+    </div>
+
+    <script src="sessionSum.js"></script>
+</body>
+</html>

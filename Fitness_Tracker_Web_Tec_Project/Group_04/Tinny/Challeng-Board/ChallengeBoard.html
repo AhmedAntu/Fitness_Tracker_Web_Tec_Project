@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Friend Fitness Challenges</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Create a Fitness Challenge</h1>
+
+    <form id="challengeForm">
+      <fieldset>
+        <label for="friend">Friend Name:</label>
+        <input type="text" id="friend" name="friend" required minlength="2">
+        <span id="friendError" class="error"></span>
+
+        <label for="type">Challenge Type:</label>
+        <select id="type" name="type" required>
+          <option value="">--Select--</option>
+          <option value="Steps">Steps</option>
+          <option value="Push-ups">Push-ups</option>
+          <option value="Squats">Squats</option>
+          <option value="Plank">Plank</option>
+          <option value="Burpees">Burpees</option>
+          <option value="Jumping Jacks">Jumping Jacks</option>
+          <option value="Crunches">Crunches</option>
+          <option value="Lunges">Lunges</option>
+          <option value="Mountain Climbers">Mountain Climbers</option>
+        </select>
+        <span id="typeError" class="error"></span>
+
+        <label for="target">Target Number:</label>
+        <input type="number" id="target" name="target" required min="1">
+        <span id="targetError" class="error"></span>
+
+        <button type="submit">Add Challenge</button>
+      </fieldset>
+    </form>
+
+    <div class="cheer-section">
+      <h2>Cheer Your Friend</h2>
+      <form id="cheerForm">
+        <input type="text" id="cheerMessage" placeholder="Write a cheer..." required>
+        <button type="submit">Send Cheer</button>
+      </form>
+      <ul id="cheerBoard"></ul>
+    </div>
+
+    <a href="Leaderboard.html" class="link-btn">Go to Leaderboard</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

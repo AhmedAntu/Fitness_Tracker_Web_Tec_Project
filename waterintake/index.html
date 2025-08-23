@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Water Intake Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Water Intake Tracker</h1>
+    <div id="hydration-tracker" class="container">
+        <h2>Water Intake</h2>
+        <div class="status">
+            Today's Goal: <span id="water-goal-display">8</span> glasses <br>
+            Completed: <span id="water-count-display">0</span> glasses
+        </div>
+        <div class="log-button-container">
+            <button id="log-water-btn" class="button">Log 1 Glass of Water</button>
+        </div>
+
+        <form id="settings-form">
+            <fieldset>
+                <legend>Reminder Setup</legend>
+                <p class="info-text">Current Reminder Time: <strong id="current-reminder-display">60</strong> minutes
+                </p>
+                <div class="input-group">
+                    <label for="daily-goal-input">Set Your Daily Goal (in glasses)</label>
+                    <input type="text" id="daily-goal-input" placeholder="Set your goal">
+                    <div id="goal-error" class="error-message">Please enter a valid number.</div>
+                </div>
+                <div class="input-group">
+                    <label for="reminder-time-input">Set New Reminder Time (in minutes)</label>
+                    <input type="text" id="reminder-time-input" placeholder="Set the reminder">
+                    <div id="reminder-error" class="error-message">Please enter a valid number of minutes.</div>
+                </div>
+                <button type="submit" id="save-settings-btn" class="button">Save Settings</button>
+            </fieldset>
+        </form>
+
+        <h3>Today's History</h3>
+        <ul id="water-history-list" class="list"></ul>
+    </div>
+
+    <div id="water-reminder-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Hydration Reminder!</h3>
+            <p>It's time to drink some water to stay on track with your daily goal. Keep it up!</p>
+            <button id="close-modal-btn" class="button">Got it!</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

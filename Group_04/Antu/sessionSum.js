@@ -1,37 +1,66 @@
-let sessions = [];
 let notesError = document.getElementById('notesError');
+let notesInput = document.getElementById('notes');
+let sessions = JSON.parse(localStorage.getItem('sessionNotes') || "[]");
 
-function checkNotes(){
-    let note = document.getElementById('notes').value;
-    if(note.trim() === ""){
-        notesError.innerHTML = "Please write some notes before saving.";
+function validateNotes() {
+    let val = notesInput.value.trim();
+    if(val === ""){
+        notesError.textContent = "Notes cannot be empty!";
         notesError.style.color = 'red';
         return false;
-    }else{
-        notesError.innerHTML = "";
+    } else {
+        notesError.textContent = "";
         return true;
     }
 }
 
-function saveSummary(){
-    let ok = checkNotes();
-    if(!ok){
-        return false;
-    }
+function saveSession() {
+    if(!validateNotes()) return false;
 
-    let note = document.getElementById('notes').value;
-    sessions.push(note);
+    let note = notesInput.value.trim();
+    sessions.push({
+        note,
+        timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('sessionNotes', JSON.stringify(sessions));
     displaySessions();
-    document.getElementById('notes').value = "";
+
+    notesInput.value = "";
     return false;
 }
 
-function displaySessions(){
-    let container = document.getElementById('sessionHistory');
-    container.innerHTML = "";
-    for(let i = 0; i < sessions.length; i++){
-        let p = document.createElement('p');
-        p.textContent = (i + 1) + ". " + sessions[i];
-        container.appendChild(p);
+function displaySessions() {
+    let list = document.getElementById('sessionList');
+    list.innerHTML = "";
+
+    sessions.forEach((session, i) => {
+        let li = document.createElement('li');
+        let date = new Date(session.timestamp);
+        let dateString = date.toLocaleString();
+        li.textContent = `[${dateString}] ${session.note}`;
+
+        let delBtn = document.createElement('button');
+        delBtn.textContent = "Delete";
+        delBtn.style.marginLeft = "20px";
+        delBtn.onclick = () => {
+            sessions.splice(i,1);
+            localStorage.setItem('sessionNotes', JSON.stringify(sessions));
+            displaySessions();
+        };
+        li.appendChild(delBtn);
+        list.appendChild(li);
+    });
+}
+
+function filterSessions() {
+    let filter = document.getElementById('sessionSearch').value.toLowerCase();
+    let list = document.getElementById('sessionList');
+    let items = list.getElementsByTagName('li');
+
+    for(let i=0; i<items.length; i++){
+        let txt = items[i].textContent || items[i].innerText;
+        items[i].style.display = txt.toLowerCase().indexOf(filter) > -1 ? "" : "none";
     }
 }
+
+displaySessions();

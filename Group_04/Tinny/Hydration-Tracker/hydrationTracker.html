@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hydration Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <button onclick="showPage('tracker')">Hydration Tracker</button>
+    <button onclick="showPage('reminder')">Reminder</button>
+    <button onclick="showPage('history')">History</button>
+  </nav>
+
+  <section id="tracker" class="active">
+    <h2>Hydration Tracker</h2>
+    <div class="card">
+      <label>Weight (kg):</label><br>
+      <input type="number" id="weight" min="20"><br>
+
+      <label>Activity Level:</label><br>
+      <select id="activity">
+        <option value="">Select</option>
+        <option value="low">Low</option>
+        <option value="moderate">Moderate</option>
+        <option value="high">High</option>
+      </select><br>
+
+      <button onclick="setGoal()">Set Goal</button>
+    </div>
+
+    <div class="card">
+      <h3 id="goalDisplay">No goal set</h3>
+      <button onclick="logWater()">Log Water (1 glass)</button>
+      <p id="progressDisplay"></p>
+      <p id="errorMsg"></p> 
+    </div>
+  </section>
+
+ 
+  <section id="reminder">
+    <h2>Reminder</h2>
+    <div class="card">
+      <label>Set Reminder Interval (minutes):</label><br>
+      <input type="number" id="reminderInterval" min="1"><br>
+      <button onclick="startReminder()">Start Reminder</button>
+      <button onclick="stopReminder()">Stop Reminder</button>
+      <p id="reminderMsg">Set a goal first in the tracker.</p>
+    </div>
+  </section>
+
+
+  <section id="history">
+    <h2>History</h2>
+    <div id="historyList"></div>
+  </section>
+
+  <script src="script.js">
+    
+  </script>
+</body>
+</html>

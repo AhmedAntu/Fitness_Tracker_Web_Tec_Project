@@ -1,0 +1,57 @@
+ body 
+    { 
+     font-family: Arial, sans-serif;
+     margin: 0; 
+     padding: 0; 
+    }
+    nav 
+    { 
+        background: #0077b6; 
+        padding: 10px; 
+        display: flex; 
+        gap: 20px; 
+    }
+    nav button 
+    { 
+        background: #fff; 
+        border: none; 
+        padding: 8px 15px; 
+        border-radius: 5px; 
+        cursor: pointer; 
+    }
+    section 
+    { 
+        display: none; 
+        padding: 20px; 
+    }
+    section.active 
+    { 
+        display: block; 
+    }
+    .card 
+    { 
+        background: #f1f1f1; 
+        padding: 15px; 
+        border-radius: 10px; 
+        margin: 10px 0; 
+    }
+    input, select, button 
+    { 
+        margin: 5px 0; 
+        padding: 8px; 
+        border-radius: 5px; 
+        border: 1px solid #ccc; 
+    }
+    .history-log 
+    { 
+        margin-top: 10px; 
+        background: #fff; 
+        border: 1px solid #ccc; 
+        padding: 10px; 
+        border-radius: 5px; 
+    }
+    #errorMsg 
+    { 
+        color: red; 
+        margin-top: 10px; 
+    }

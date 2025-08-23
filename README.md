@@ -4,6 +4,7 @@
 A comprehensive web-based Fitness Tracker developed as part of our Web Technologies curriculum. This platform empowers users to monitor workouts, track physical progress, set health goals, and stay consistent through a smart, interactive interface. Whether you're strength training, following a program, or aiming for specific goals—this system supports it all.
 
 🔍 Key Features
+
 ✅ 1. Workout Logging
 
 Screens: Workout Timer, Exercise Logger, Session Summary
@@ -93,6 +94,7 @@ Interaction:
 • Log meals quickly
 • Scan packaged foods
 • Analyze macro breakdown (carbs, fats, protein)
+
 
 📁 Project Status
 For now -->

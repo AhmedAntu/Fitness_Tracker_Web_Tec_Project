@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Tracker - Trend Graph</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js for graph -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>📈 Trend Graph</h1>
+
+    <!-- Input Form -->
+    <form id="trendForm">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date">
+
+      <label for="strength">Strength (kg lifted):</label>
+      <input type="number" id="strength" name="strength" min="0">
+
+      <label for="cardio">Cardio (minutes):</label>
+      <input type="number" id="cardio" name="cardio" min="0">
+
+      <button type="submit">Add Data</button>
+    </form>
+
+    <!-- Error Message -->
+    <p id="error" class="error"></p>
+
+    <!-- Graph -->
+    <div class="chart-container">
+      <canvas id="trendChart"></canvas>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

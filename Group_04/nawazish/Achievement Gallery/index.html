@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Tracker - Achievement Gallery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🏆 Achievement Gallery</h1>
+
+    <!-- Achievement Form -->
+    <form id="achievementForm">
+      <label for="title">Milestone Title:</label>
+      <input type="text" id="title" name="title" placeholder="e.g., Completed 5K Run">
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date">
+
+      <button type="submit">Add Achievement</button>
+    </form>
+
+    <!-- Error Message -->
+    <p id="error" class="error"></p>
+
+    <!-- Gallery -->
+    <h2>Your Milestones</h2>
+    <div id="gallery" class="gallery"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -8,9 +8,9 @@
 </head>
 <body>
   <div class="container">
-    <h1>📊 Progress Tracker</h1>
+    <h1> Progress Tracker</h1>
 
-    <!-- Progress Form -->
+    
     <form id="progressForm" action="process.php" method="POST">
       <label for="goal">Goal Target (e.g., 10 km):</label>
       <input type="number" id="goal" name="goal" min="1">
@@ -21,16 +21,16 @@
       <button type="submit">Track Progress</button>
     </form>
 
-    <!-- Error Message -->
+    
     <p id="error" class="error"></p>
 
-    <!-- Progress Bar -->
+    
     <div class="progress-section">
-      <h2>Your Completion</h2>
-      <div class="progress-bar">
-        <div id="progressFill">0%</div>
-      </div>
-    </div>
+    <h2>Your Completion</h2>
+    <div class="progress-bar">
+    <div id="progressFill">0%</div>
+  </div>
+  </div>
   </div>
 
   <script src="script.js"></script>

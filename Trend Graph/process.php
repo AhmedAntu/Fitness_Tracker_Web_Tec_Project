@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $strength = $_POST["strength"];
     $cardio = $_POST["cardio"];
 
-    // Validation
+    
     if (empty($date) || empty($strength) || empty($cardio)) {
         die("⚠️ Please fill in all fields.");
     }
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("⚠️ Values cannot be negative.");
     }
 
-    // Safe output
+    
     echo "✅ Data added successfully!<br>";
     echo "📅 Date: " . htmlspecialchars($date) . "<br>";
     echo "💪 Strength: " . htmlspecialchars($strength) . " kg<br>";

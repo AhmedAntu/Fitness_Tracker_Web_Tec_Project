@@ -40,7 +40,7 @@ form.addEventListener("submit", function(event) {
   let strength = document.getElementById("strength").value;
   let cardio = document.getElementById("cardio").value;
 
-  // Validation
+  
   if (date === "" || strength === "" || cardio === "") {
     event.preventDefault();
     errorMsg.textContent = "⚠️ Please fill in all fields.";
@@ -55,13 +55,13 @@ form.addEventListener("submit", function(event) {
 
   errorMsg.textContent = "";
 
-  // Update chart
+  
   chart.data.labels.push(date);
   chart.data.datasets[0].data.push(Number(strength));
   chart.data.datasets[1].data.push(Number(cardio));
   chart.update();
 
-  // Stop actual form submission (for demo only)
+  
   event.preventDefault();
   form.reset();
 });

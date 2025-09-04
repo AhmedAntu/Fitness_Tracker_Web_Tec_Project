@@ -7,7 +7,7 @@ form.addEventListener("submit", function(event) {
   let target = document.getElementById("target").value;
   let deadline = document.getElementById("deadline").value;
 
-  // Validation
+  
   if (goalName === "" || target === "" || deadline === "") {
     event.preventDefault();
     errorMsg.textContent = "⚠️ Please fill in all fields.";
@@ -27,17 +27,17 @@ form.addEventListener("submit", function(event) {
     return;
   }
 
-  // Clear error
+  
   errorMsg.textContent = "";
 
-  // Add to list dynamically
+  
   let li = document.createElement("li");
   li.textContent = `🎯 ${goalName} → Target: ${target}, Deadline: ${deadline}`;
   goalList.appendChild(li);
 
-  // Reset form
+  
   form.reset();
 
-  // Stop actual submission (for demo only)
+  
   event.preventDefault();
 });

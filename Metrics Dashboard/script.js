@@ -7,7 +7,7 @@ form.addEventListener("submit", function(event) {
   let strength = document.getElementById("strength").value;
   let cardio = document.getElementById("cardio").value;
 
-  // Prevent form submission if validation fails
+  
   if (date === "" || strength === "" || cardio === "") {
     event.preventDefault();
     errorMsg.textContent = "⚠️ Please fill in all fields.";
@@ -15,15 +15,16 @@ form.addEventListener("submit", function(event) {
   }
 
   if (strength < 0 || cardio < 0) {
+    
     event.preventDefault();
     errorMsg.textContent = "⚠️ Values cannot be negative.";
     return;
   }
 
-  // Clear error if all good
+  
   errorMsg.textContent = "";
 
-  // Add to table dynamically
+  
   let newRow = document.createElement("tr");
   newRow.innerHTML = `
     <td>${date}</td>
@@ -32,9 +33,9 @@ form.addEventListener("submit", function(event) {
   `;
   tableBody.appendChild(newRow);
 
-  // Reset form
+  
   form.reset();
 
-  // Stop actual form submission (for demo only)
+  
   event.preventDefault();
 });

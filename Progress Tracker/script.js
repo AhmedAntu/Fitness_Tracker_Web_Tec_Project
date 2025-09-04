@@ -6,7 +6,7 @@ form.addEventListener("submit", function(event) {
   let goal = document.getElementById("goal").value;
   let current = document.getElementById("current").value;
 
-  // Validation
+  
   if (goal === "" || current === "") {
     event.preventDefault();
     errorMsg.textContent = "⚠️ Please fill in all fields.";
@@ -31,16 +31,16 @@ form.addEventListener("submit", function(event) {
     return;
   }
 
-  // Clear error
+  
   errorMsg.textContent = "";
 
-  // Calculate progress %
+  
   let percent = Math.round((current / goal) * 100);
 
-  // Update progress bar
+  
   progressFill.style.width = percent + "%";
   progressFill.textContent = percent + "%";
 
-  // Stop actual form submission (for demo only)
+  
   event.preventDefault();
 });

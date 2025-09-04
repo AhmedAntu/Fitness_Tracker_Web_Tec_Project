@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $strength = $_POST["strength"];
     $cardio = $_POST["cardio"];
 
-    // Basic validation
+    
     if (empty($date) || empty($strength) || empty($cardio)) {
         die("⚠️ Please fill in all fields.");
     }

@@ -16,11 +16,13 @@ body {
 }
 
 h1, h2 {
+  
   text-align: center;
   margin-bottom: 20px;
 }
 
 form {
+
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -37,6 +39,7 @@ input, button {
 }
 
 button {
+
   background: #007bff;
   color: white;
   border: none;
@@ -44,6 +47,7 @@ button {
 }
 
 button:hover {
+
   background: #0056b3;
 }
 
@@ -55,12 +59,14 @@ button:hover {
 }
 
 table {
+
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
 th, td {
+
   border: 1px solid #ccc;
   padding: 10px;
   text-align: center;

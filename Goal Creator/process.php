@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $target = $_POST["target"];
     $deadline = $_POST["deadline"];
 
-    // Basic validation
+    
     if (empty($goalName) || empty($target) || empty($deadline)) {
         die("⚠️ Please fill in all fields.");
     }
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("⚠️ Deadline cannot be in the past.");
     }
 
-    // Safe output
+    
     echo "✅ Goal added successfully!<br>";
     echo "🎯 Goal: " . htmlspecialchars($goalName) . "<br>";
     echo "📌 Target: " . htmlspecialchars($target) . "<br>";

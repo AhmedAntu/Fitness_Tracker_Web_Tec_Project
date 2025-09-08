@@ -46,7 +46,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise Logger</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Fitness_Tracker_Web_Tec_Project/Group_04/Antu/asset/style.css">
+
     <script>
         function validateExerciseForm(){
             let exercise = document.getElementById('exercise').value.trim();
@@ -120,7 +121,7 @@
     </ul>
 
     <div style="text-align:center; margin-top: 40px;">
-        <a id="back" href="dashBoard.php"><button type="button">Back</button></a>
+        <a id="back" href="../controller/dashBoard.php"><button type="button">Back</button></a>
     </div>
 </body>
 </html>

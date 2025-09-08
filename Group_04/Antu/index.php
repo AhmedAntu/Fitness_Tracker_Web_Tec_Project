@@ -1,5 +1,5 @@
 <?php
 
-    header('location: view/dashBoard.php');
+    header('location: controller/dashBoard.php');
 
 ?>

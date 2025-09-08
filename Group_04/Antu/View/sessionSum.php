@@ -1,75 +1,111 @@
 <?php
-    session_start();
+session_start();
+require_once "../model/db.php"; // ✅ include database connection
 
-    /* 
-    if(!isset($_COOKIE['status']) || $_COOKIE['status'] != true){
-        header('location: login.php?error=badrequest');
-        exit();
+/* 
+if(!isset($_COOKIE['status']) || $_COOKIE['status'] != true){
+    header('location: login.php?error=badrequest');
+    exit();
+}
+*/
+
+if(!isset($_SESSION['sessionNotes'])){
+    $_SESSION['sessionNotes'] = array();
+
+    if ($con) {
+        $result = mysqli_query($con, "SELECT * FROM notes ORDER BY timestamp DESC");
+        if ($result && mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)){
+                $_SESSION['sessionNotes'][] = array(
+                    'id' => $row['id'],
+                    'note' => $row['note'],
+                    'timestamp' => $row['timestamp']
+                );
+            }
+        }
     }
-    */
+}
 
-    if(!isset($_SESSION['sessionNotes'])){
-        $_SESSION['sessionNotes'] = array();
-    }
+$error = "";
+$success = "";
+$editIndex = null;
+$notes = "";
 
-    $error = "";
-    $success = "";
-    $editIndex = null;
-    $notes = "";
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
+    $notes = trim($_POST['notes']);
+    $editIndex = isset($_POST['editIndex']) ? intval($_POST['editIndex']) : null;
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
-        $notes = trim($_POST['notes']);
-        $editIndex = isset($_POST['editIndex']) ? intval($_POST['editIndex']) : null;
+    if(empty($notes)){
+        $error = "Notes cannot be empty!";
+    } elseif(strlen($notes) < 5){
+        $error = "Notes must be at least 5 characters long.";
+    } else {
+        $noteData = array(
+            'note' => $notes,
+            'timestamp' => date('Y-m-d H:i:s')
+        );
 
-        // ✅ PHP Validation
-        if(empty($notes)){
-            $error = "Notes cannot be empty!";
-        } elseif(strlen($notes) < 5){
-            $error = "Notes must be at least 5 characters long.";
-        } else {
-            $noteData = array(
-                'note' => $notes,
-                'timestamp' => date('Y-m-d H:i:s')
-            );
+        if($editIndex !== null && isset($_SESSION['sessionNotes'][$editIndex])){
+            $noteId = $_SESSION['sessionNotes'][$editIndex]['id'];
+            $_SESSION['sessionNotes'][$editIndex]['note'] = $notes;
+            $_SESSION['sessionNotes'][$editIndex]['timestamp'] = $noteData['timestamp'];
 
-            if($editIndex !== null && isset($_SESSION['sessionNotes'][$editIndex])){
-                $_SESSION['sessionNotes'][$editIndex] = $noteData;
-                $success = "Session note updated successfully!";
-            } else {
-                $_SESSION['sessionNotes'][] = $noteData;
-                $success = "Session notes saved successfully!";
+            if ($con) {
+                $sql = "UPDATE notes SET note='$notes', timestamp='{$noteData['timestamp']}' WHERE id=$noteId";
+                mysqli_query($con, $sql);
             }
 
-            $notes = "";
-            $editIndex = null;
-        }
-    }
+            $success = "Note updated successfully!";
+        } else {
+            if ($con) {
+                $sql = "INSERT INTO notes (note, timestamp) VALUES ('$notes', '{$noteData['timestamp']}')";
+                if (mysqli_query($con, $sql)) {
+                    $noteData['id'] = mysqli_insert_id($con);
+                }
+            }
 
-    if(isset($_GET['delete']) && is_numeric($_GET['delete'])){
-        $index = intval($_GET['delete']);
-        if(isset($_SESSION['sessionNotes'][$index])){
-            array_splice($_SESSION['sessionNotes'], $index, 1);
-            header('location: sessionSum.php');
-            exit();
+            // Save in session
+            $_SESSION['sessionNotes'][] = $noteData;
+            $success = "Note added successfully!";
         }
-    }
 
-    if(isset($_GET['edit']) && is_numeric($_GET['edit'])){
-        $editIndex = intval($_GET['edit']);
-        if(isset($_SESSION['sessionNotes'][$editIndex])){
-            $session = $_SESSION['sessionNotes'][$editIndex];
-            $notes = $session['note'];
-        }
+        $notes = "";
+        $editIndex = null;
     }
+}
+
+if(isset($_GET['delete']) && is_numeric($_GET['delete'])){
+    $deleteIndex = intval($_GET['delete']);
+    if(isset($_SESSION['sessionNotes'][$deleteIndex])){
+        $noteId = $_SESSION['sessionNotes'][$deleteIndex]['id'];
+
+        if ($con) {
+            $sql = "DELETE FROM notes WHERE id=$noteId";
+            mysqli_query($con, $sql);
+        }
+
+        unset($_SESSION['sessionNotes'][$deleteIndex]);
+        $_SESSION['sessionNotes'] = array_values($_SESSION['sessionNotes']);
+        header('location: sessionSum.php');
+        exit();
+    }
+}
+
+if(isset($_GET['edit']) && is_numeric($_GET['edit'])){
+    $editIndex = intval($_GET['edit']);
+    if(isset($_SESSION['sessionNotes'][$editIndex])){
+        $session = $_SESSION['sessionNotes'][$editIndex];
+        $notes = $session['note'];
+    }
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session Summary</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Fitness_Tracker_Web_Tec_Project/Group_04/Antu/asset/style.css">
     <script>
         function validateSessionForm() {
             let notes = document.getElementById('notes').value.trim();
@@ -148,7 +184,7 @@
     </ul>
 
     <div style="text-align:center; margin-top: 40px;">
-        <a id="back" href="dashBoard.php"><button type="button">Back</button></a>
+        <a id="back" href="../controller/dashBoard.php"><button type="button">Back</button></a>
     </div>
 </body>
 </html>

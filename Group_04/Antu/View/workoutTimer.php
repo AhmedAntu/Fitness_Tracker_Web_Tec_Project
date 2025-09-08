@@ -15,7 +15,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Timer</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Fitness_Tracker_Web_Tec_Project/Group_04/Antu/asset/style.css">
+
     <script>
         let timer = null;
         let seconds = 0;
@@ -66,7 +67,7 @@
 </head>
 <body id="antu">
     <h1 id="Header">Workout Timer</h1>
-    
+
     <div style="text-align:center; margin-top:40px;">
         <div id="timeDisplay" style="font-size: 50px; font-weight: bold;">00:00</div>
         <div id="timerMsg" style="margin-top:10px; font-weight:bold;"></div>
@@ -76,7 +77,7 @@
     </div>
 
     <div style="text-align:center; margin-top:50px;">
-        <a id="back" href="dashBoard.php"><button type="button">Back</button></a>
+        <a id="back" href="../controller/dashBoard.php"><button type="button">Back</button></a>
     </div>
 </body>
 </html>

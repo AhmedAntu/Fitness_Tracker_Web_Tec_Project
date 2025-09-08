@@ -1,73 +1,39 @@
 <?php
     session_start();
 
-    /*
+    /* 
     if(!isset($_COOKIE['status']) || $_COOKIE['status'] != true){
         header('location: login.php?error=badrequest');
         exit();
-    }*/
+    }
+    */
 
     if(!isset($_SESSION['measurements'])){
         $_SESSION['measurements'] = array();
     }
 
-    $errors = array();
+    $error = "";
     $success = "";
-    $editIndex = null;
+    $height = "";
+    $weight = "";
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
+        $height = trim($_POST['height']);
         $weight = trim($_POST['weight']);
-        $waist = trim($_POST['waist']);
-        $chest = trim($_POST['chest']);
-        $editIndex = isset($_POST['editIndex']) ? intval($_POST['editIndex']) : null;
 
-        if(empty($weight) || !is_numeric($weight) || $weight < 20 || $weight > 100){
-            $errors['weight'] = "Please enter weight between 20 to 100 kg!";
-        }
-        if(empty($waist) || !is_numeric($waist) || $waist < 20 || $waist > 100){
-            $errors['waist'] = "Please enter waist between 20 to 100 cm!";
-        }
-        if(empty($chest) || !is_numeric($chest) || $chest < 20 || $chest > 100){
-            $errors['chest'] = "Please enter chest between 20 to 100 cm!";
-        }
-
-        if(empty($errors)){
-            $measurementData = array(
-                'weight' => $weight,
-                'waist' => $waist,
-                'chest' => $chest,
-                'date' => date('Y-m-d H:i:s')
-            );
-
-            if($editIndex !== null && isset($_SESSION['measurements'][$editIndex])){
-                $_SESSION['measurements'][$editIndex] = $measurementData;
-                $success = "Measurement updated successfully!";
-            } else {
-                $_SESSION['measurements'][] = $measurementData;
-                $success = "Measurement saved successfully!";
-            }
-
-            $weight = $waist = $chest = "";
-            $editIndex = null;
-        }
-    }
-
-    if(isset($_GET['delete']) && is_numeric($_GET['delete'])){
-        $index = intval($_GET['delete']);
-        if(isset($_SESSION['measurements'][$index])){
-            array_splice($_SESSION['measurements'], $index, 1);
-            header('location: measurement.php');
-            exit();
-        }
-    }
-
-    if(isset($_GET['edit']) && is_numeric($_GET['edit'])){
-        $editIndex = intval($_GET['edit']);
-        if(isset($_SESSION['measurements'][$editIndex])){
-            $m = $_SESSION['measurements'][$editIndex];
-            $weight = $m['weight'];
-            $waist = $m['waist'];
-            $chest = $m['chest'];
+        if(empty($height) || !is_numeric($height) || $height <= 0){
+            $error = "Height must be a positive number.";
+        } elseif(empty($weight) || !is_numeric($weight) || $weight <= 0){
+            $error = "Weight must be a positive number.";
+        } else {
+            $_SESSION['measurements'][] = [
+                'height' => floatval($height),
+                'weight' => floatval($weight),
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
+            $success = "Measurement recorded successfully!";
+            $height = "";
+            $weight = "";
         }
     }
 ?>
@@ -78,70 +44,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Measurement Input</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Fitness_Tracker_Web_Tec_Project/Group_04/Antu/asset/style.css">
+
+    <script>
+        function validateMeasurementForm(){
+            let height = document.getElementById('height').value.trim();
+            let weight = document.getElementById('weight').value.trim();
+            let errorBox = document.getElementById('jsError');
+
+            if(height === "" || isNaN(height) || parseFloat(height) <= 0){
+                errorBox.innerHTML = "Height must be a positive number.";
+                errorBox.style.color = "red";
+                return false;
+            }
+
+            if(weight === "" || isNaN(weight) || parseFloat(weight) <= 0){
+                errorBox.innerHTML = "Weight must be a positive number.";
+                errorBox.style.color = "red";
+                return false;
+            }
+
+            errorBox.innerHTML = "";
+            return true;
+        }
+    </script>
 </head>
 <body id="antu">
     <h1 id="Header">Measurement Input</h1>
 
     <?php if(!empty($success)): ?>
-        <p style="color: green; text-align: center;"><?php echo $success; ?></p>
+        <p style="color: green; text-align:center;"><?php echo $success; ?></p>
     <?php endif; ?>
 
-    <form id="Form" method="post" action="">
+    <form id="Form" method="post" action="" onsubmit="return validateMeasurementForm();">
         <fieldset>
-            Weight (kg): 
-            <input type="number" id="weight" name="weight" 
-                   value="<?php echo isset($weight) ? htmlspecialchars($weight) : ''; ?>" 
-                   step="0.1" required>
-            <?php if(isset($errors['weight'])): ?>
-                <div style="color: red;"><?php echo $errors['weight']; ?></div>
-            <?php endif; ?>
-            
-            Waist (cm): 
-            <input type="number" id="waist" name="waist" 
-                   value="<?php echo isset($waist) ? htmlspecialchars($waist) : ''; ?>" 
-                   step="0.1" required>
-            <?php if(isset($errors['waist'])): ?>
-                <div style="color: red;"><?php echo $errors['waist']; ?></div>
-            <?php endif; ?>
-            
-            Chest (cm): 
-            <input type="number" id="chest" name="chest" 
-                   value="<?php echo isset($chest) ? htmlspecialchars($chest) : ''; ?>" 
-                   step="0.1" required>
-            <?php if(isset($errors['chest'])): ?>
-                <div style="color: red;"><?php echo $errors['chest']; ?></div>
-            <?php endif; ?>
+            Height (cm):
+            <input type="number" id="height" name="height" value="<?php echo htmlspecialchars($height); ?>" placeholder="Enter height in cm">
 
-            <?php if($editIndex !== null): ?>
-                <input type="hidden" name="editIndex" value="<?php echo $editIndex; ?>">
-                <input type="submit" name="submit" value="Update Measurement">
-                <input type="button" value="Cancel" onclick="location.href='measurement.php'">
-            <?php else: ?>
-                <input type="submit" name="submit" value="Save Measurement">
+            Weight (kg):
+            <input type="number" id="weight" name="weight" value="<?php echo htmlspecialchars($weight); ?>" placeholder="Enter weight in kg">
+
+            <div id="jsError"></div>
+            <?php if(!empty($error)): ?>
+                <div style="color:red;"><?php echo $error; ?></div>
             <?php endif; ?>
+            
+            <input type="submit" name="submit" value="Save Measurement">
         </fieldset>
     </form>
 
-    <div style="text-align:center; margin-top:50px;">
-        <a id="back" href="dashBoard.php"><button type="button">Back</button></a>
-    </div>
-
-    <h3>Measurement History</h3>
+    <h3>Previous Measurements</h3>
     <ul id="measurementList">
-        <?php if(isset($_SESSION['measurements']) && count($_SESSION['measurements']) > 0): ?>
-            <?php foreach($_SESSION['measurements'] as $index => $m): ?>
-                <li>
-                    Weight: <?php echo htmlspecialchars($m['weight']); ?> kg, 
-                    Waist: <?php echo htmlspecialchars($m['waist']); ?> cm, 
-                    Chest: <?php echo htmlspecialchars($m['chest']); ?> cm
-                    [<?php echo $m['date']; ?>]
-                    &nbsp;
-                    <a href="?edit=<?php echo $index; ?>"><button type="button">Edit</button></a>
-                    <a href="?delete=<?php echo $index; ?>" onclick="return confirm('Are you sure you want to delete this measurement?')"><button type="button">Delete</button></a>
+        <?php if(count($_SESSION['measurements']) > 0): ?>
+            <?php foreach($_SESSION['measurements'] as $m): ?>
+                <li>[<?php echo $m['timestamp']; ?>] 
+                    Height: <?php echo htmlspecialchars($m['height']); ?> cm, 
+                    Weight: <?php echo htmlspecialchars($m['weight']); ?> kg
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>
     </ul>
+
+    <div style="text-align:center; margin-top: 40px;">
+        <a id="back" href="../controller/dashBoard.php"><button type="button">Back</button></a>
+    </div>
 </body>
 </html>

@@ -1,10 +1,14 @@
 <?php
 session_start();
+require_once('db_connect.php');
+
 if (!isset($_COOKIE['status'])) {
   header('location: login.php?error=badrequest');
   exit();
 }
-$challenges = isset($_SESSION['challenges']) ? $_SESSION['challenges'] : [];
+
+$sql = "SELECT * FROM challenges ORDER BY id DESC";
+$result = mysqli_query($con, $sql);
 ?>
 <!DOCTYPE html>
 <html>
@@ -90,19 +94,19 @@ $challenges = isset($_SESSION['challenges']) ? $_SESSION['challenges'] : [];
         </tr>
       </thead>
       <tbody id="leaderboardBody">
-        <?php if (empty($challenges)): ?>
+        <?php if (mysqli_num_rows($result) > 0): ?>
+          <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            <tr>
+              <td><?php echo htmlspecialchars($row['friend_name']); ?></td>
+              <td><?php echo htmlspecialchars($row['challenge_type']); ?></td>
+              <td><?php echo htmlspecialchars($row['target_number']); ?></td>
+              <td><?php echo htmlspecialchars($row['challenge_date']); ?></td>
+            </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
           <tr>
             <td colspan="4" style="text-align:center;">No challenges added yet.</td>
           </tr>
-        <?php else: ?>
-          <?php foreach ($challenges as $ch): ?>
-            <tr>
-              <td><?php echo htmlspecialchars($ch['friend']); ?></td>
-              <td><?php echo htmlspecialchars($ch['type']); ?></td>
-              <td><?php echo htmlspecialchars($ch['target']); ?></td>
-              <td><?php echo htmlspecialchars($ch['date']); ?></td>
-            </tr>
-          <?php endforeach; ?>
         <?php endif; ?>
       </tbody>
     </table>

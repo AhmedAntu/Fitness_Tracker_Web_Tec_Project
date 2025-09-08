@@ -18,14 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $goal = $weight * 30;
     if ($activity == 'moderate') $goal += 500;
     if ($activity == 'high') $goal += 1000;
-    $_SESSION['hydration']['goal'] = floor($goal / 250); // glasses instead of ml
+    $_SESSION['hydration']['goal'] = floor($goal / 250); 
     $_SESSION['hydration']['progress'] = 0;
     $_SESSION['hydration']['history'] = [];
   }
   if (isset($_POST['log_water'])) {
     if ($_SESSION['hydration']['progress'] < $_SESSION['hydration']['goal']) {
       $_SESSION['hydration']['progress']++;
-      // Save only glass count, let JS add correct PC time
+      
       $_SESSION['hydration']['history'][] = "Glass " . $_SESSION['hydration']['progress'];
     }
   }
@@ -111,7 +111,7 @@ $hydration = $_SESSION['hydration'];
     <a href="dashboard.php" class="back-btn">Back to Dashboard</a>
   </nav>
 
-  <!-- Tracker -->
+  
   <section id="tracker" class="active">
     <h2>Hydration Tracker</h2>
     <div class="card">
@@ -143,7 +143,7 @@ $hydration = $_SESSION['hydration'];
     </div>
   </section>
 
-  <!-- Reminder -->
+  
   <section id="reminder">
     <h2>Reminder</h2>
     <div class="card">
@@ -157,7 +157,7 @@ $hydration = $_SESSION['hydration'];
     </div>
   </section>
 
-  <!-- History -->
+  
   <section id="history">
     <h2>History</h2>
     <div id="historyList" data-history='<?php echo json_encode($hydration['history']); ?>'></div>
@@ -202,7 +202,7 @@ $hydration = $_SESSION['hydration'];
       }
     }
 
-    // ✅ Render history with PC time
+    
     function renderHistory() {
       let historyContainer = document.getElementById('historyList');
       let historyData = JSON.parse(historyContainer.getAttribute('data-history'));

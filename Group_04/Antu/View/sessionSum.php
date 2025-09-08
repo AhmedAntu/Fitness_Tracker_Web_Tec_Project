@@ -15,13 +15,17 @@
     $error = "";
     $success = "";
     $editIndex = null;
+    $notes = "";
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
         $notes = trim($_POST['notes']);
         $editIndex = isset($_POST['editIndex']) ? intval($_POST['editIndex']) : null;
 
+        // ✅ PHP Validation
         if(empty($notes)){
             $error = "Notes cannot be empty!";
+        } elseif(strlen($notes) < 5){
+            $error = "Notes must be at least 5 characters long.";
         } else {
             $noteData = array(
                 'note' => $notes,
@@ -67,6 +71,24 @@
     <title>Session Summary</title>
     <link rel="stylesheet" href="style.css">
     <script>
+        function validateSessionForm() {
+            let notes = document.getElementById('notes').value.trim();
+            let errorBox = document.getElementById('jsError');
+
+            if (notes === "") {
+                errorBox.innerHTML = "Notes cannot be empty!";
+                errorBox.style.color = "red";
+                return false;
+            } else if (notes.length < 5) {
+                errorBox.innerHTML = "Notes must be at least 5 characters long.";
+                errorBox.style.color = "red";
+                return false;
+            }
+
+            errorBox.innerHTML = "";
+            return true;
+        }
+
         function filterSessions() {
             let filter = document.getElementById('sessionSearch').value.toLowerCase();
             let list = document.getElementById('sessionList');
@@ -86,15 +108,17 @@
         <p style="color: green; text-align: center;"><?php echo $success; ?></p>
     <?php endif; ?>
 
-    <form id="Form" method="post" action="">
+    <form id="Form" method="post" action="" onsubmit="return validateSessionForm();">
         <fieldset>
             Notes:
             <textarea id="notes" name="notes" 
                       placeholder="Enter session notes here..." 
-                      rows="4" cols="50" required><?php echo isset($notes) ? htmlspecialchars($notes) : ''; ?></textarea>
+                      rows="4" cols="50" required><?php echo htmlspecialchars($notes); ?></textarea>
+            <div id="jsError"></div>
             <?php if(!empty($error)): ?>
                 <div style="color: red;"><?php echo $error; ?></div>
             <?php endif; ?>
+
             <?php if($editIndex !== null): ?>
                 <input type="hidden" name="editIndex" value="<?php echo $editIndex; ?>">
                 <input type="submit" name="submit" value="Update Note">

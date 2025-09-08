@@ -68,7 +68,7 @@
     <h1 id="Header">Workout Timer</h1>
     
     <div style="text-align:center; margin-top:40px;">
-        <div id="timeDisplay" style="font-size: 48px; font-weight: bold;">00:00</div>
+        <div id="timeDisplay" style="font-size: 50px; font-weight: bold;">00:00</div>
         <div id="timerMsg" style="margin-top:10px; font-weight:bold;"></div>
         <button style="color: rgb(12, 99, 12);" onclick="startTimer()">Start</button>
         <button style="color: red;" onclick="stopTimer()">Stop</button>

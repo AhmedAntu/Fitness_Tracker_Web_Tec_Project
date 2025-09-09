@@ -1,30 +1,37 @@
 <?php
 session_start();
+require_once('db_connect.php');
+
 if (!isset($_COOKIE['status'])) {
   header('location: login.php?error=badrequest');
   exit();
 }
-if (!isset($_SESSION['challenges'])) {
-  $_SESSION['challenges'] = [];
-}
+
 if (!isset($_SESSION['cheers'])) {
   $_SESSION['cheers'] = [];
 }
 $successMessage = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_challenge'])) {
-  
   $friend = trim($_POST["friend"]);
   $type = $_POST["type"];
   $target = $_POST["target"];
-  $newChallenge = [
-    "friend" => $friend,
-    "type" => $type,
-    "target" => $target,
-    "date" => date("Y-m-d")
-  ];
-  $_SESSION['challenges'][] = $newChallenge;
-  $successMessage = "Challenge added successfully!";
+  $date = date("Y-m-d");
+
+
+  $friend_safe = mysqli_real_escape_string($con, $friend);
+  $type_safe = mysqli_real_escape_string($con, $type);
+  $target_safe = mysqli_real_escape_string($con, $target);
+
+  $sql = "INSERT INTO challenges (friend_name, challenge_type, target_number, challenge_date) VALUES ('$friend_safe', '$type_safe', '$target_safe', '$date')";
+
+  if (mysqli_query($con, $sql)) {
+    $successMessage = "Challenge added successfully!";
+  } else {
+    $successMessage = "Error: " . mysqli_error($con);
+  }
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_cheer'])) {
   $cheerMessage = trim($_POST["cheerMessage"]);
   if (!empty($cheerMessage)) {
@@ -154,7 +161,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_cheer'])) {
         <label for="friend">Friend Name:</label>
         <input type="text" id="friend" name="friend" required minlength="2">
         <span id="friendError" class="error"></span>
-
         <label for="type">Challenge Type:</label>
         <select id="type" name="type" required>
           <option value="">--Select--</option>
@@ -169,15 +175,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_cheer'])) {
           <option value="Mountain Climbers">Mountain Climbers</option>
         </select>
         <span id="typeError" class="error"></span>
-
         <label for="target">Target Number:</label>
         <input type="number" id="target" name="target" required min="1">
         <span id="targetError" class="error"></span>
-
         <button type="submit" name="add_challenge">Add Challenge</button>
       </fieldset>
     </form>
-
     <div class="cheer-section">
       <h2>Cheer Your Friend</h2>
       <form id="cheerForm" method="post" action="challengeBoard.php">
@@ -193,12 +196,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_cheer'])) {
     <a href="leaderboard.php" class="link-btn">Go to Leaderboard</a>
     <a href="dashboard.php" class="back-btn">Back to Dashboard</a>
   </div>
-
   <script>
-    document.getElementById("challengeForm").addEventListener("submit", function (e) {
+    document.getElementById("challengeForm").addEventListener("submit", function(e) {
       let isValid = true;
-
-      
       var friend = document.getElementById("friend").value;
       var friendError = document.getElementById("friendError");
       friendError.textContent = "";
@@ -206,8 +206,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_cheer'])) {
         friendError.textContent = "Friend name is required.";
         isValid = false;
       }
-
-     
       var type = document.getElementById("type").value;
       var typeError = document.getElementById("typeError");
       typeError.textContent = "";
@@ -215,8 +213,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_cheer'])) {
         typeError.textContent = "Please select a challenge type.";
         isValid = false;
       }
-
-     
       var target = document.getElementById("target").value;
       var targetError = document.getElementById("targetError");
       targetError.textContent = "";
@@ -224,7 +220,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_cheer'])) {
         targetError.textContent = "Target number must be at least 1.";
         isValid = false;
       }
-
       if (!isValid) {
         e.preventDefault();
       }
